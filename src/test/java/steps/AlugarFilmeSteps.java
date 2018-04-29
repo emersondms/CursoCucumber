@@ -1,10 +1,12 @@
 package steps;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Então;
 import cucumber.api.java.pt.Quando;
 import entidades.Filme;
 import entidades.NotaAluguel;
+import entidades.TipoAluguel;
 import org.junit.Assert;
 import services.AluguelService;
 import utils.DateUtils;
@@ -12,6 +14,7 @@ import utils.DateUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class AlugarFilmeSteps {
 
@@ -19,7 +22,7 @@ public class AlugarFilmeSteps {
     private AluguelService aluguel = new AluguelService();
     private NotaAluguel nota;
     private String erro;
-    private String tipoAluguel;
+    private TipoAluguel tipoAluguel;
 
     @Dado("^um filme com estoque de (\\d+) unidades$")
     public void umFilmeComEstoqueDeUnidades(int arg1) {
@@ -30,6 +33,19 @@ public class AlugarFilmeSteps {
     @Dado("^que o preço de aluguel seja R\\$ (\\d+)$")
     public void queOPreçoDeAluguelSejaR$(int arg1) {
         filme.setAluguel(arg1);
+    }
+
+    @Dado("^um filme$")
+    public void umFilme(DataTable table) throws Throwable {
+        Map<String, String> map = table.asMap(String.class, String.class);
+        filme = new Filme();
+        filme.setEstoque(Integer.parseInt(map.get("estoque")));
+        filme.setAluguel(Integer.parseInt(map.get("preço")));
+        String tipo = map.get("tipo");
+        tipoAluguel =
+            tipo.equals("semanal") ? TipoAluguel.SEMANAL :
+            tipo.equals("extendido") ? TipoAluguel.EXTENDIDO :
+            TipoAluguel.COMUM;
     }
 
     @Quando("^alugar$")
@@ -58,7 +74,10 @@ public class AlugarFilmeSteps {
 
     @Dado("^que o tipo do aluguel seja (.*)")
     public void queOTipoDoAluguelSejaExtendido(String tipo) {
-        tipoAluguel = tipo;
+        tipoAluguel =
+            tipo.equals("semanal") ? TipoAluguel.SEMANAL :
+            tipo.equals("extendido") ? TipoAluguel.EXTENDIDO :
+            TipoAluguel.COMUM;
     }
 
     @Então("^a data de entrega será em (\\d+) dias?$")
