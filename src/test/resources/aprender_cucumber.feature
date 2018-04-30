@@ -10,19 +10,19 @@ Funcionalidade: Aprender Cucumber
     Quando executá-lo
     Então a especificação deve finalizar com sucesso
 
-  @Tipo1
+  @Tag1
   Cenário: Deve incrementar contador
     Dado que o valor do contador é 15
     Quando incrementar em 3
     Então o valor do contador será 18
 
-  @Tipo2
+  @Tag2
   Cenário: Deve calcular atraso na entrega
     Dado que a entrega é dia 05/04/2018
     Quando a entrega atrasar em 2 dias
     Então a entrega será efetuada em 07/04/2018
 
-  @Tipo1 @Tipo2
+  @Tag1 @Tag2
   Cenário: Deve calcular atraso na entrega da China
     Dado que a entrega é dia 05/04/2018
     Quando a entrega atrasar em 2 meses
