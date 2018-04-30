@@ -10,9 +10,10 @@ import org.junit.runner.RunWith;
     plugin = {"pretty", "html:target/report-html", "json:target/report.json"},
     monochrome = false, snippets = SnippetType.CAMELCASE,
     dryRun = false, strict = false,
-    features = "src/test/resources/inserir_conta.feature",
+    features = "src/test/resources/",
     glue = "steps",
-    tags = {"~@Ignore"}
+    tags = {"@Unitários", "~@Ignore"}
 )
-public class RunnerTest {
+public class RunnerUnitariosTest {
 }
+
